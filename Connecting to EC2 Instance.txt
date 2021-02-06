@@ -1,0 +1,18 @@
+Linux/MAC:
+ssh ec2-user@*EC2 public IP* [this will throw error since private key is not linked]
+chmod 0400 *private key location* [use this to resolve bad permissions error]
+ssh -i *private key location* ec2-user@*EC2 public IP*
+
+*****************************************************************************************
+Windows:
+ssh ec2-user@*EC2 public IP* [this will throw error since private key is not linked]
+Resolve bad permission error by making current user the owner of private key file
+ssh -i *private key location* ec2-user@*EC2 public IP*
+
+*****************************************************************************************
+Putty:
+ec2-user@*EC2 public IP* [this will throw error since private key is not linked]
+Convert private key PEM file to PPK file using putty keygen
+Save private key ppk file in SSH->Auth
+Save Session
+Open Session
