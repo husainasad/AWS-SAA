@@ -1,0 +1,10 @@
+ssh -i *private key location* ec2-user@*EC2 public IP* [Connect to EC2]
+sudo su [Become super user]
+yum update -y [Update instance]
+yum install -y httpd.x86_64 [Install httpd]
+systemctl start httpd.service [Start service]
+systemctl enable httpd.service [Service remains enabled across reboot]
+curl localhost:80 ]Load url]
+Add HTTP Type in inbound rules
+echo "Hello World" > /var/www/html/index.html [Update web page]
+echo "Hello World from $(hostname -f)" > /var/www/html/index.html [Update web page]
