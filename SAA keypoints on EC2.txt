@@ -1,0 +1,30 @@
+All EC2 instance are billed by the second except t2.micro which is free.
+
+To connect to EC2 instance you can SSH (for Linux/Mac/Windows 10) or use Putty (only for Windows).
+
+SSH works on port 22.
+
+You can also use EC2 Instance Connect via console to connect directly.
+
+Timeout issues occur due to Security group issues.
+
+Use command "chmod 0400" to resolve permissions for SSH on Linux/Mac.
+
+Security groups can reference IP ranges as well as other Security groups.
+
+There are three types of IPs : Public, Private and Elastic.
+
+EC2 user data is a bootstrap script which can customize and EC2 instance at boot time
+
+There are 4 types of EC2 launch modes: On demand, Reserved, Spot Instances and Dedicated Hosts.
+
+The basic EC2 instance types are: R (for Ram), C (for Compute), M (for balanced), I (for IO), G (for GPU) and T2/T3 (burstable).
+
+AMIs can be used to pre-install software on EC2 for faster boot.
+
+AMIs can be copied across AWS accounts as well as regions.
+
+EC2 instances can be started in placement groups which are of three types:
+	Cluster (High performance but High risk)
+	Spread (Robust but low performance)
+	Partition (Hybrid of Cluster and Spread)
