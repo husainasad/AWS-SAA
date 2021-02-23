@@ -1,0 +1,39 @@
+Auto Scaling Group (ASG)
+
+Scale out (add EC2 instances) to match an increased load.
+Scale in (remove EC2 instances) to match a decreased load.
+Ensure there is minimum and maximum number of machines running.
+Automatically register new instances to the laod balancer.
+
+Scaling policies can be on CPU, Network or even custom metrics or schedule.
+ASGs use Launch Configurations and you update ASGs by providing a new configuration.
+IAM roles attached to an ASG will get assigned to EC2 instances.
+ASGs are free. Only resources launched are billed.
+ASGs automatically restart instances if they get terminated due to some issue.
+ASGs automatically remove unhealthy instances and replace them with new healthy instances.
+
+Scaling Policies
+
+Target Tracking Scaling:
+	Most simple and easy to use
+
+Simple/Step Scaling
+
+Scheduled Actions
+	Anticipate a scaling based on known usage patterns
+
+Scaling Cooldowns
+
+The cooldown period ensures that the auto scaling group does not launch or terminate additional instance before the previous scaling activity takes effect.
+In addition to default cooldown for ASGs, specifi sacling groups can also have cooldowns applied to them.
+A scaling specific cooldown period overrides the default cooldown period.
+
+ASG Default Termination Policies
+	Find the availability zone which has the most number of instances
+	If there are mulitple instances in the availability zone to choose from, ASG will choose to delete the one with the oldest configuration
+ASG tries to balance the number of instances across availability zones by default.
+
+ASG Lifecycle Hooks
+	By default as soon as an instance is launched in an ASG, liefecycle hooks are in service
+	You can perform extra steps before the instance goes in service (Pending state)
+	You can perform extra steps before the instance is terminated (Terminating state)
