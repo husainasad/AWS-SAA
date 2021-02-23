@@ -1,0 +1,86 @@
+Load balancers:
+	Spread load across mulitple downstream instances
+	Expose a single point of access (DNS) to your application
+	Seamlessly handle failures of downstream instances
+	Do regular health checks on the instances
+	Provide SSL termination (HTTPS)
+	Enforce stickiness with cookies
+	High availability across zones
+	Separate public traffic from private traffic
+
+AWS has 3 kinds of managed Load Balancers:
+Classic Load Balancer(CLB): HTTP, HTTPS, TCP
+Application Load Balancer(ALB): HTTP, HTTPS, WebSocket
+Network Load Balancer(NLB): TCP, TLS, UDP
+
+Troubleshooting:
+	4XX errors are client induced errors
+	5XX errors are application induced errors
+	Load Balancer Errors 503 mean at capacity or no registered target
+
+
+Application Load Balancer
+
+Load Balancing to multiple HTTP applications across machines.
+Load Balanching to mulitple applications on same machine.
+Routing tables to different target groups:
+	Routing based on path in URL
+	Routing based on hostname in URL
+	Routing based on Query string, headers
+
+ALB are great fit for micro services & container based application.
+Has port mapping feature to redirect to a dynamice port in ECS.
+Fixed hostname.
+Application servers don't see IP of client directly.
+
+
+Network Load Balancer
+
+Handles millions of requests per second.
+Less latency than ALB.
+NLB has 1 static IP per zone and supports ELastic IP.
+NLBs are used for extreme performance.
+Not free.
+
+Load Balancer Stickiness
+
+Same client is always redirected to same instance behind LB.
+Works in CLB adn ALB.
+'Cookie' is used for stickiness with customizable expiration time.
+Help in keeping user's session data safe.
+Stickiness can bring imbalance to LB.
+
+Cross Load Balancing
+
+Each load balancer instance distributes evenly across all registered instances in all zones.
+CLB:
+	Disabled by default
+	No charges
+ALB:
+	Always on
+	No charges
+NLB:
+	Disabled by default
+	Charges incurred
+
+SSL/TLS
+
+An SSL certificate allows traffic between clients and load balancers to be encrypted in transit.
+SSL refers to Secure Socket Layer used for encryption.
+TLS refers to Transport Layer Security (newer to SSL).
+SSL certificates have expiration time.
+
+SNI
+
+SNI solves the problem of loading mulitple SSL certificates onto one web server.
+It is newer and required client to indicate hostname of target server during initial handshake.
+The server then returns with the correct certificate or loads the default.
+CLB:
+	Support only one SSL certificate
+	Must use multiple CLB for multiple hostname with multiple SSL certificates
+ALB:
+	Supports multiple listeners with multiple certificates
+	Uses SNI for this
+NLB:
+	Supports multiple listeners with multiple certificates
+	Uses SNI for this
