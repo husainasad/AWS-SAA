@@ -1,0 +1,19 @@
+Scalability means that an application/system can handle greater loads by adapting.
+There are two types of scalability:
+	Vertical scalability
+	Horizontal scalability (elasticity)
+
+Scalability is linked but different to high availability.
+
+Vertical scalability means increasing the size of the instance.
+Vertical scalability is very common for non distributed systems such as database.
+RDS, ElastiCache can scale vertically.
+There is a hardware limit on how much user can vertically scale.
+
+Horizontal scalability means increasing number of instances/systems for the application.
+Horizontal scalability implies distributed systems.
+Horizontal scalability is common for web applications.
+
+High availability usually goes hand in hand with horizontal scaling.
+High availability means running the application in atleast 2 different data centers (availability zones).
+The goal here is to survive data center loss.
