@@ -1,0 +1,98 @@
+Elastic Block Store(EBS) volume
+
+It is a network drive and not a physical drive.
+	It uses network to communicate with the instance causing some latency
+	It can be detached from one EC2 instance and attached to another one easily.
+It is locked to an availability zone.
+	To move a volume across AZ, you need to snapshot it
+Has provisioned capacity.
+	You get billed for the provisioned capacity even if you actually use less
+	It is possible to increase the capacity over time
+
+EBS volume types
+
+GP2 (general purpose;cheap)
+	Recommended for most workloads
+	System boot volumes
+	Virtual desktops
+	Low Latency interactive apps
+	Development and test environments
+	Has burst
+	3 IOPS/GiB, minimum 100 IOPS, burst to 3000 IOPS, max 16000 IOPS
+	1 GiB-16 GiB, +1TB = +3000 IOPS
+
+IO1 (provisioned IOPS;expensive)
+	Critical business applications that require sustained IOPS performance or more than GP2 limit
+	Large database workloads such as:
+		MongoDB, Cassandra, Microsoft SQL server, MySQL, PostgreSQL, Oracle
+	Min 100 IOPS, Max 64000 IOS (Nitro) or 32000(other)
+	4 GiB-16 GiB, Size of volume and IOPS are independent
+
+ST1 (throughput optimized HDD)
+	Streaming workloads requiring consistent fast throughput at a low price
+	Big data, Data warehouses, Log processing
+	Apache Kafka
+	Has burst
+	Cannot be a boot volume
+	500 GiB-16 GiB, 500 MiB/s throughput
+
+SC1 (cold HDD)
+	Throughput-oriented storage for large volumes of data that is infrequently accessed
+	Scenarios where the lowest storage cost is important
+	Cannot be a boot volume
+	Has burst
+	Basically a cheaper ST1
+	250 GiB-16 GiB, 250 MiB/s throughput
+
+EBS snapshots
+
+	Incremental - only backup changed blocks
+	EBS backups use IO so shouldn't be run while application has lot of traffic
+	Snapshots will be stored in S3 (but you can't see them)
+	Not necessary to detach volume to do snapshot but is recommended
+	Max 100,000 snapshots
+	Can copy snapshots across AZ or region
+	Can make Image AMI from snapshot
+	EBS volumes  restored snapshots need to be pre-warmed (using fio or dd command to read entire volume)
+	Snapshots can be automated using Amazon Data Lifecycle Manager
+
+EBS Encryption
+
+When an encrypted EBS volume is created, the following happens:
+	Data at rest is encrypted inside the volume
+	All data in flight moving between the instance and volume is encrypted
+	All snapshots are encrypted
+	All volumes created from the snapshot are also encrypted.
+Encryption and decryption happens transparently.
+Encryption has minimal impact on latency.
+Copying an unencrypted snashot allows encryption.
+Snapshots of encrypted volumes are encrypted.
+
+Encrypting an unencrypted EBS volume:
+	Create an EBS snapshot of volume
+	Encrypt the EBS snapshot (using copy)
+	Create new EBS volume from snapshot (volume will also be encrypted)
+	Attach the encrypted volume to the original instance
+
+Instance Store
+
+Physical disk attached to physical server where EC2 is.
+Very high IOPS (because it is physical).
+Block Storage (like EBS).
+Cannot increase in size.
+Risk of data loss if hardware fails.
+
+EBS RAID
+
+RAID 0 (increase performance)
+	Combining two or more volumes and getting total disk space and I/O
+	If one disk fails, all data is lost (logical volume fails)
+	An application needing lot of IOPS but no fault tolerance
+	A database already having buil-in replication
+
+RAID 1 (increase fault tolerance)
+	Mirroring a volume to another
+	If one disk fails, logical volume still works
+	Data has to be sent to two EBS volumes at same time (2x network)
+	Application that needs volume fault tolerance
+		Application that needs service disks
