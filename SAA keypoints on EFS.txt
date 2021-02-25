@@ -1,0 +1,18 @@
+Elastic File System (EFS)
+
+Managed NFS (Network File System) that can be mounted on multiple EC2s (unlike EBS).
+EFS can work with EC2 in multi AZ.
+Highly available, scalable, expensive, pay per use.
+Use case:
+	content management
+	web serving
+	data sharing
+	Wordpress
+Uses NFSv4.1 protocol.
+Uses security group to control access to EFS.
+Performance modes:
+	General purpose (default)
+	Max I/O used then thousands of EC2 are using EFS
+EFS file sync to sync from on-premise file system to EFS.
+Backup EFS-to-EFS (incremental can chose frequency).
+Encryption at rest using KMS (like EBS)
