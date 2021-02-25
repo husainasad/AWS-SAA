@@ -11,6 +11,3 @@ sudo su
 echo "hello" > hello.txt
 cat hello.txt
 # use command 'ls' and/or 'cat hello.txt' on different instance, if the file is available, mount is successful
-
-
- 
