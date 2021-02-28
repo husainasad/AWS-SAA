@@ -9,3 +9,35 @@ Write scaling using sharding.
 Read scaling using replicas.
 Multi AZ with failover capacity.
 AWS takes care of OS maintenance/patching, optimizations, setup, configuration, monitoring, failure recovery and backups.
+
+ElastiCache Redis
+
+Multi AZ with auto failover.
+Read replicas to sclae reads and have high availability.
+Data durability using AOF persistence.
+Backup and restore features.
+
+ElastiCache MemCached
+
+High performance, distributed memory object caching system intended for use in speeding up dynamic web applications.
+Multinode for partitioning of data (sharding).
+Non persistent.
+No backup and restore.
+Multi threaded architecture.
+
+ElastiCache - Cache Security
+
+All caches in ElastiCache:
+	Support SSL in flight encryption
+	Do not support IAM authentication
+	IAM policies on ElastiCache are only used for AWS API level security
+Redis AUTH
+	User can create a password/token when creating redis cluster
+	AUTH is an extra level of security on top of secuity groups
+Memcached
+	Supports SASL based authentication
+
+Patterns for ElastiCache
+	Lazy loading: all read data is cached, data can become stale in cache.
+	Write through: Adds or updates data in cache when written to DB (no stale state).
+	Session store: store temporary session data in a cache (TTL).
