@@ -1,0 +1,70 @@
+
+Relational Database Service (RDS)
+It is a managed DB service for DB that use SQL as query language.
+It allows you to create database in cloud that are managed by AWS.
+	Postgres
+	MySQL
+	MariaDB
+	Oracle
+	Microsoft SQL Server
+	Aurora (AWS proprietary db)
+
+RDS vs deploying DB on EC2
+RDS is managed service.
+	Automated provisioning, OS patching
+	Continuous backups and restore to specific timestamp (point in time restore)
+	Monitoring dashboards
+	Read replicas for improved read performance
+	Multi AZ setup for DR (Disaster Recovery)
+	Maintenance windows for upgrades
+	Scaling capability (vertical & horizontal)
+	Storage backed up by EBS
+But user cannot SSH into RDS instance.
+
+RDS Backups
+Backups are automatically enabled in RDS.
+Automated Backups.
+	Daily full backup of the database (during maintenance windows)
+	Transaction logs are backed up by RDS every 5 minutes
+	7 days retention (can be increased to 35 days)
+DB snapshots
+	Manually triggered by user
+	Lifelong retention of backup
+
+RDS read replicas for read scalability
+
+Within AZ, Cross AZ or cross region.
+Replication is ASYNC, so reads are eventually consistent.
+Replicas can be promoted to their own DB.
+Applications must update the connection string to leverage read replicas.
+Read replicas are used for SELECT only kind of statements (not INSERT, UPDATE, DELETE).
+In AWS, there is network cost when data goes from one AZ to another.
+
+RDS Multi AZ (Disaster Recovery)
+
+SYNC replication.
+One DNS name-automatic app failover to standby.
+Increase availability.
+Failover in case of loss of AZ, loss of network, instance or storage failure.
+No manual intervention required for switching to standby instance.
+Not used for scaling.
+
+RDS Security - Encryption
+
+At rest encryption
+	Possiblility to encrypt the master & read replicas with AWS KMS.
+	Encryption has to be defined at launch time.
+	If master is not encrypted, read replicas cannot be encrypted.
+In-flight encryption
+	SSL certificates to encrypt data to RDS in flight.
+	Provide SSL options with trust certificate when connecting to database.
+
+RDS Security - Network and IAM
+
+Network security
+	RDS databases are usually deployed within a private subnet, not in a public.
+	RDS security works by leveraging secuirty groups (same as EC2) by controlling which IP/security group can communicate with RDS.
+Access Management
+	IAM policies help control who can manage AWS RDS (using RDS API).
+	Traditional username and password can be used to login into database.
+	IAM-based authentication can alos be used to login into RDS (MySQL/postgreSQL)
