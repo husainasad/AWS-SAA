@@ -1,0 +1,46 @@
+
+Amazon Aurora
+
+Aurora is a proprietary technology from AWS (not open sourced).
+Postgre and MySQL are both supported as Aurora DB.
+Aurora is 'AWS optimized' giving better performance than MySQl or Postgres.
+Aurora storage automatically increments.
+Aurora can have much more replicas than other (MySQL/Postgres) and replication process is faster.
+Failover is instantaneous since it is HA native.
+Aurora costs more but is much more efficient.
+
+Aurora Features
+	Automatica fail over
+	Backup and Recovery
+	Isolation and Security
+	Industry compliance
+	Push button scaling
+	Automated patching with zero downtime
+	Advanced Monitoring
+	Routinge maintenance
+	Backtrack: restore data from an point of time without using backtracks
+
+Aurora  Security (same as RDS)
+	Uses same engines (so same security)
+	Encryption at rest using KMS
+	Automated backups, snapshots and rpelicas also encrypted
+	Encryption in flight using SSL
+	Possibilty to authenticate using IAM token
+	User cannot SSH
+
+Aurora Serverless
+	Automated database instantiation and auto scaling based on actual usage.
+	Good for infrequent, intermittent or unpredicatable workloads.
+	No capacity planning needed.
+	Pay per second (can be more cost efective)
+
+Global Aurora
+	Aurora Cross region read replicas
+		useful for disaster recovery
+		simple to put in place
+	Aurora Globla Database (recommended)
+		1 primary region (read/write)
+		upto 5 secondary (read/write) regions, replication lag is <1 second
+		upto 16 read replicas per secondary region
+		helps in decreasing latency
+		promoting another region (for disaster decovery) has recovery time objective (RTO) of <1 minute
