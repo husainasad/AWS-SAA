@@ -1,0 +1,11 @@
+
+AWS ELastiCache
+
+ElastiCache is a service for managed cache just like RDS is to get managed relational databases.
+Caches are in-memory databases with really high performance and low latency.
+This helps in reducing load off of databases for read intensive workloads.
+Helps in making applications stateless.
+Write scaling using sharding.
+Read scaling using replicas.
+Multi AZ with failover capacity.
+AWS takes care of OS maintenance/patching, optimizations, setup, configuration, monitoring, failure recovery and backups.
