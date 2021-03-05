@@ -1,0 +1,92 @@
+
+Route53
+
+It is a managed Domain Name System (DNS).
+DNS is a collection of rules and records which help clients understand how to reach a server through URLs.
+The most common records are:
+	A: URL to IPv4
+	AAAA: URL to IPv6
+	CNAME: URL to URL
+	Alias: URL to AWS resource
+
+Route53 can use:
+	public domain names you own (or buy)
+	private domain names that can be resolved by your instances in your VPCs
+
+Route53 features
+	Global service
+	Load balancing (through DNS - also called client load balancing)
+	Limited health checks
+	Routing policies: simple, failover, geolocation, latency, weighted, multi value
+
+Route 53 is not free
+
+DNS Records TTL (Time to Live)
+
+TTL is a way for browsers and client to cache the response of a DNS query.
+This is done is to not to overload the DNS.
+High TTL
+	Less traffic on DNS
+	Possibly outdated records
+Low TTL
+	More traffic on DNS
+	Records are not outdated for long
+	Records are easy to change
+
+CNAME
+	Points a URL to another URL
+	Only for Non Root Domain (can be *something*.*somedomain*.com but not directly *somedomain*.com)
+ALIAS
+	Points a URL to AWS resource
+	Works for Root and Non Root Domain
+	Free of charge
+	Native health checks
+
+Simple Routing Policy
+	Maps a domain to one URL
+	Use when you need to redirect to a single resource
+	health checks cannot be attached
+	If multiple values are returned, a random one is chosen by the client server
+	Client server is aware of different IPs
+
+Weighted Routing Policy
+	Controls the % of the requests that go to a specific endpoint
+	Helpful to test 1% of traffic on new application version
+	Helpful to split traffic between two regions
+	Can be associated with health checks
+	Client server unaware of different IPs
+
+Latency Routing Policy
+	Redirect to server that has the least latency close to client server
+	Helpful when latency of user is priority
+
+Health Checks
+	If X health checks fail in a row => unhealthy (default 3)
+	If X health checks pass in a row => healthy (default 3)
+	Default health check interval: 30s
+	About 15 health checkers check the enpoint health
+	Can have HTTP, TCP, and HTTPS health checks (no SSL verification)
+	Health checks can be integrated with CloudWatch
+	Health checks can be linked to Route53 DNS queries
+
+Failover Routing Policy
+	Primary instance with mandatory health check
+	Secondary instance for disaster recovery (health check not mandatory)
+	If primary instance is unhealthy, client is directed to secondary instance
+
+Geo location Routing Policy
+	Different from latency based
+	Based on user location
+	Also creates a default policy for unmatched user addresses
+
+Mulit Value Routing Policy
+	Use when routing traffic to multiple resources
+	Want to associate health checks with records
+	Upto 8 healthy records are returned for each Mulit Value query
+	Multi value is not a substitiute for ELB
+	Client server aware of different IPs
+
+Route53 as a Registrar
+
+A domain name registrar is an organisation that manages the reservation of Internet domain names
+Domain Registrar!=DNS
