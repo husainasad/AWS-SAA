@@ -1,0 +1,28 @@
+
+ElasticBeanStalk 
+It is a developer centric view of deploying an application on AWS.
+It uses all the different components (EC2, ASG, ELB, RDS, etc).
+All the components are in one view which is easy to make sense of.
+Developer has full control over the configuration.
+BeanStalk is free, only the underlying resources are charged.
+
+It is a managed service
+	Instance configuration/OS is handled by beanstalk
+	Deployment strategy is configurable but performed by ElasticBeanStalk
+
+Just the application code is the responsibility of the developer.
+
+Three architecture models:
+	Single Instance deployment: good for dev
+	LB + ASG: great for production or pre-production web applications
+	ASG only: great for non-web apps in production
+
+ElasticBeanStalk has three components
+	Application
+	Application version
+	Environment name
+
+Developer can deploy the application to environments and can promote application versions to the next environment.
+Rollback feature to previous application version.
+Full control over lifecycle of environments.
+
