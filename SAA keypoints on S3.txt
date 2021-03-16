@@ -1,0 +1,111 @@
+
+Amazon S3
+Amazon S3 is one of the main building blocks of AWS.
+It is also referred to as 'infinite scaling' storage.
+S3 allows people to store objects (files) in 'buckets' (directories).
+Buckets must have globally unique name.
+Buckets are defined at the region level.
+Naming conventions:
+	No uppercase
+	No underscore
+	3-63 characters long
+	Not an IP
+	Must start with lowercase letter or number
+
+Objects (files) have a Key. The key is the FULL path of object.
+There is no concept of 'directories' within a bucket.
+Object values are content of the body:
+	Max size is 5TB
+	Multi-part upload for object size>5TB
+
+Amazon S3 versioning
+Users can version the files in S3.
+It is enabled at bucket level.
+Same key overwrite will increment the version.
+Versioning the bucket is a good practice:
+	Protects against unintended deletes
+	Easy rollback
+Any file that is not versioned prior to enable versioning will have version 'null'.
+
+S3 Encryption for Objects
+There are 4 methods of encrypting objects in S3:
+
+SSE-S3 
+Encrypts S3 objects using keys handled & managed by AWS
+Object is encrypted server-side
+AES-256 encryption
+Header "x-amz-server-side-encryption":"AES256" must be set
+
+SSE-KMS
+Encrypts S3 objects using keys handled & managed by KMS
+KMS advantages: user control + audit trail
+Object is encrypted server-side
+Header "x-amz-server-side-encryption":"aws:kms" must be set
+
+SSE-C
+Server-side encryption using data keys fully managed by the customer outside of AWS
+Amazon S3 does not store the encryption keys
+HTTPS must be used
+Encryption key must be provided in HTTP headers, for every HTTP request made
+
+Client Side Encryption
+Client library such as Amazon S3 Encryption Client
+Clients must encrypt data before sending to S3
+CLients must decrypt data before retrieving from S3
+Customer fully manages the keys and encryption cycle
+
+Encryption in transit (SSL)
+AWS S3 exposes:
+	HTTP endpoint: non encrypted
+	HTTPS endpoint: encryption in flight
+HTTPS is madatory for SSE-C
+Encryption in flight is also called SSL/TLS
+
+S3 Security
+User based:
+	IAM Policies - which API calls should be allowed for a specific user from IAM console
+Resource based:
+	Bucket Policies - bucket wide rules from S3 console - allows cross account
+	Object Access Control List (ACL) - finer grain
+	Bucket Access Control List (ACL) - less common
+
+S3 Bucket Policies
+JSON based policies
+	Resources: buckets or objects
+	Actions: Set of API to Allow or Deny
+	Effect: Allow/Deny
+	Principal: The account or user to apply the policy to
+Use S3 bucket for policy to:
+	Grant public access to the bucket
+	Force objects to be encypted at upload
+	Grant access to another account (Cross Account)
+
+S3 Networking:
+	Supports VPC Endpoints (for instances in VPC without internet)
+
+S3 Logging and Audit:
+	S3 access logs can be stored in other S3 bucket
+	API calls can be logged in AWS CloudTrail
+S3 User Security:
+	MFA (multi factor authentication) can be required in versioned buckets to delete objects
+	Signed URLs: URLs that are valid for limited time
+
+S3 Websites
+S3 can host static websites and have them accessible on www
+The website URL will be:
+	<bucket-name>.s3-website-<AWS-region>.amazonaws.com
+	or
+	<bucket-name>.s3-website.<AWS-region>.amazonaws.com
+If you get a 403 error, make sure the bucket policy allows public reads
+
+S3 CORS
+If you request data from another S3 bucket, you need to enable CORS
+Cross Origin Resource Sharing allows you to limit the number of websites that can request your files in S3 (and limit your costs)
+
+S3 Consistency Model
+Read after write consistency for PUTs of new objects
+	As soon as an object is written, we can retrieve it eg. PUT 200-> GET 200.
+	This is true except if we did GET before to see if the object existed eg. GET 404-> PUT 200-> GET 404.
+Eventual Consistency for DELETEs and PUTs of existing objects
+	If we read an object after updating , we might get the older version eg. PUT 200-> PUT 200-> GET 200 (might be older version).
+	If we delete an object, we might still be able to retrieve it for a short time eg. DELETE 200-> GET 200.
