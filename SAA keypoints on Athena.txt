@@ -1,0 +1,8 @@
+
+AWS Athena
+Serveless service to perform analytics directly against S3 files.
+Uses SQL to query the files.
+Has JDBC/ODBC driver.
+Charged per query and amount of data scanned.
+Supports CSV, JSON, ORC and many other formats.
+Use cases: Business intelligence/analytics/reporting, analyze and query VPC logs, ELB logs etc
