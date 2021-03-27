@@ -1,0 +1,38 @@
+
+AWS Global Accelerator
+	Unicast IP: one server holds one IP address
+	Anycast IP: all servers hold the same IP address and client is routed to the nearest one
+
+
+	Leverage the AWS internal network to route to the application
+	Anycast IPs are created for the application
+	The Anycast IP send traffic directly to Edge locations
+	The edge locations send the traffic to the application
+
+Works with Elastic IP, EC2 instance, ALB, NLB, public or private
+Consistent Performance
+	Intelligent routing to lowest latency and fast regional failover
+	No issue with client cache
+	Internal AWS network
+Health Checks
+	Global Accelerator performs health checks on the applications
+	Helps make applications global (failover <1 minute for unhealthy)
+	Great for disaster recovery
+Security
+	only external IPs need to be whitelisted
+	DDoS protection from AWS shield
+
+AWS Global Accelerator vs CloudFront
+Both use AWS global network and edge locations
+Both services integrate with AWS Shield for DDoS protection
+
+CloudFront
+	Improves performance for cacheable content (images/videos)
+	Improves performance for dynamic content (API acceleration and dynamic site delivery)
+	Content is served at edge
+AWS Global Accelerator
+	Improves performance for a wide range of applications over TCP or UDP
+	Proxying packets at the edge to applications running in one or more AWS regions
+	Good fit for non HTTP use cases such as gaming (UDP), IoT (MQTT), or Voice over IP
+	Good for HTTP use cases that require static IP addresses
+	Good for HTTP use cases that require deterministic, fast regional failover
